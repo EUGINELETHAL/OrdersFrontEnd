@@ -8,10 +8,21 @@ const OrdersList = () => {
   const [currentIndex, setCurrentIndex] = useState(-1);
   const [searchTitle, setSearchTitle] = useState("");
   
-const token =  localStorage.getItem("token");
- console.log(token);
+// const token =  localStorage.getItem("token");
+//  console.log(token);
 
   useEffect(() => {
+    function Auth() {
+      const token = localStorage.getItem("token");
+      if (token === null) {
+        console.log("No credentials found, redirecting...");
+        window.location = "/Login";
+      } else {
+        return token;
+      }
+    }
+   Auth();
+    
     retrieveOrders();
   }, []);
 
@@ -31,6 +42,7 @@ const token =  localStorage.getItem("token");
   };
 
   const refreshList = () => {
+    
     retrieveOrders();
     setCurrentOrder(null);
     setCurrentIndex(-1);
@@ -62,7 +74,7 @@ const token =  localStorage.getItem("token");
         console.log(e);
       });
   };
-
+  
   return (
     <div>
       {orders.length < 1 ? (
